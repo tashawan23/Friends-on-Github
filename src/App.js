@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { CardList } from './components/CardList';
+import { Form } from './components/Form';
+import { Header } from './components/Header';
 
-function App() {
+const App = () =>  {
+  const[cards, setCards] = useState([])
+
+  const addNewCard = cardInfo => {
+    setCards(cards.concat(cardInfo));
+  }
+  const deleteCard = selected => {
+    setCards(cards.filter((card) => card.name !== selected));
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <header>
+      <Header />
+     </header>
+      <body>
+     <Form onSubmit={addNewCard} />
+     <CardList cards={cards} deleteCard={deleteCard}/>
+     </body>
     </div>
   );
 }
